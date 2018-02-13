@@ -20,12 +20,15 @@ namespace ImageGallery.Controllers
             _cognitiveService = cognitiveService;
         }
 
+        // the SECOND major operation is to snag images and their associated metadata from Blob storage
         public async Task<ActionResult> Index()
         {
             var images = await _storageService.GetImagesAsync();
             return View(images);
         }
 
+        // the FIRST major operation is uploading an image to Azure Blob storage, analyzing the image using
+        //Azure Cognitive Services, and uploading image metadata generated from Cognitive Services back to Blob Services.
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase file)
         {
